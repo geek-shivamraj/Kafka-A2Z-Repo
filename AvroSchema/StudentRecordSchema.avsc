@@ -1,0 +1,72 @@
+{
+  "fields": [
+    {
+      "default": "NONE",
+      "name": "Name",
+      "type": "string"
+    },
+    {
+      "default": -1,
+      "name": "Age",
+      "type": "int"
+    },
+    {
+      "default": {},
+      "name": "Address",
+      "type": {
+        "fields": [
+          {
+            "default": -1,
+            "name": "HouseNo",
+            "type": "int"
+          },
+          {
+            "default": "NONE",
+            "name": "City",
+            "type": "string"
+          },
+          {
+            "default": "NONE",
+            "name": "State",
+            "type": "string"
+          },
+          {
+            "default": -1,
+            "name": "Pincode",
+            "type": "int"
+          }
+        ],
+        "name": "residential",
+        "type": "record"
+      }
+    },
+    {
+      "name": "Course",
+      "type": {
+        "name": "courseEnum",
+        "symbols": [
+          "BBA",
+          "BCA",
+          "BTECH",
+          "MBA",
+          "MCA"
+        ],
+        "type": "enum"
+      }
+    },
+    {
+      "name": "Gender",
+      "type": {
+        "name": "genderEnum",
+        "symbols": [
+          "M",
+          "F",
+          "O"
+        ],
+        "type": "enum"
+      }
+    }
+  ],
+  "name": "StudentRecord",
+  "type": "record"
+}
