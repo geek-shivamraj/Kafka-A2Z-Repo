@@ -1,5 +1,3 @@
-# Apache-Kafka
-
 ## Table of Content
 
 * [Confluent Cloud for Kafka](#confluentkafka)
