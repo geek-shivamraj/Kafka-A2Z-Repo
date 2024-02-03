@@ -1,8 +1,9 @@
 ## Table of Content
 
-* [Confluent Cloud for Kafka](#confluentkafka)
-* [Kafdrop Documentation](#kafdrop)
-
+* [**Confluent Cloud for Kafka**](#confluentkafka)
+* [**Kafdrop Documentation**](#kafdrop)
+* [**Steps to run Kafka Connect locally**](#runningkafkalocally)
+*******************************************************************************************************************************************************************
 ## _ConfluentKafka_
 
 Steps to configure Confluent Kafka using Confluent CLI
@@ -50,7 +51,7 @@ confluent kafka topic produce <topicName> --schema <fileName.avsc> --value-forma
 confluent kafka topic consume <topicName> -b --value-format avro --schema-registry-endpoint <schema-registry-endpoint> \
 	--schema-registry-api-key <schema-registry-api-key> --schema-registry-api-secret <schema-registry-api-secret>
 ```
-
+*******************************************************************************************************************************************************************
 ## _Kafdrop_
 - **Kafdrop** is a web UI for viewing Kafka topics and browsing consumer groups. The tool displays information such as brokers, topics, partitions, consumers, and lets you view messages.
 - You can run the Kafdrop JAR directly, via Docker, or in Kubernetes.
@@ -61,7 +62,7 @@ confluent kafka topic consume <topicName> -b --value-format avro --schema-regist
 
 * First Build the JAR in the terminal:
 ```sh
-mvn clean compile package
+mvn clean compile package -DskipTest=true
 ```
 * Run the JAR file in the terminal:
 ```sh
@@ -90,11 +91,75 @@ and if you also require basic auth for your schema registry connection you shoul
 
 **Credit:** A Big Thumbs up👍😌  to **Obsidian Dynamics** for this Wonderful tool. [**Checkout official latest changes & upgradations Here**](https://github.com/obsidiandynamics/kafdrop)
 
+*******************************************************************************************************************************************************************
+## _RunningKafkaLocally_
 
+Steps to configure Kafka Connect locally
+1. Download Kafka connect from the [official confluent Repo Github](https://github.com/confluentinc)
+2. [kafka-connect-http official](https://github.com/castorm/kafka-connect-http/tree/master)
+3. Remove not required dependencies to resolve all errors
+4. Create a config file & add connect-standalone.properties with below configuration. Refer [config/kafka-connect-http connect-standalone.properties](https://github.com/srvcode/Kafka-A2Z-Repo/blob/master/kafka-connect-http/config/connect-standalone.properties)
+```sh
+bootstrap.servers=ip:9092
 
+group.id=connect-cluster
 
+key.converter=org.apache.kafka.connect.json.JsonConverter
+key.converter.schema.registry.url=http://localhost:8081
+value.converter=org.apache.kafka.connect.json.JsonConverter
+value.converter.schema.registry.url=http://localhost:8081
+key.converter.schemas.enable=false
+value.converter.schemas.enable=false
 
+config.storage.topic=_connect-configs
+offset.storage.topic=_connect-offsets
+status.storage.topic=_connect-statuses
 
+config.storage.replication.factor=1
+offset.storage.replication.factor=1
+status.storage.replication.factor=1
+
+internal.key.converter=org.apache.kafka.connect.json.JsonConverter
+internal.value.converter=org.apache.kafka.connect.json.JsonConverter
+internal.key.converter.schemas.enable=false
+internal.value.converter.schemas.enable=false
+
+plugin.path=/absolute_path or relative/kafka-connect-http/target
+```
+
+6. To run the kafka connect locally. Give the connect-standalone.properties file path to the arguments & main class as
+```
+org.apache.kafka.connect.cli.ConnectDistributed
+```
+![image](https://github.com/srvcode/Kafka-A2Z-Repo/assets/74100226/921737d0-4f91-4fc7-ab27-b871eafeaef1)
+
+7. [Refer Source Configuration to create the connector](https://github.com/srvcode/Kafka-A2Z-Repo/tree/master/kafka-connect-http/example)
+* POST `localhost:8083/connectors`
+```
+{
+  "name": "SourceConnector1",
+  "config": {
+    "connector.class": "com.github.castorm.kafka.connect.http.HttpSourceConnector",
+    "http.request.url": "https://5577d429-5de3-4242-a281-9a141cb55f34.mock.pstmn.io/rest/api",
+    "http.request.params": "updated=${offset.timestamp}",
+    "http.request.headers": "Accept: application/json",
+    "http.response.parser": "com.github.castorm.kafka.connect.http.response.KvHttpResponseParser",
+    "http.auth.type": "Basic",
+    "http.auth.user": "user",
+    "http.auth.password": "password",
+    "http.offset.initial": "key=TICKT-0001, timestamp=2020-01-01T00:00:01Z",
+    "http.response.list.pointer": "/issues",
+    "http.response.record.offset.pointer": "key=/key, timestamp=/fields/updated",
+    "kafka.topic": "topic-name",
+    "http.timer.interval.millis": "0",
+    "http.timer.catchup.interval.millis": "0",
+    "http.client.read.timeout.millis": "0"
+  }
+}
+```
+* Connection Plugins (GET) `localhost:8083/connector-plugins`
+* Get Active Connectors (GET) `localhost:8083/connectors`
+* Delete Connector (DELETE) `localhost:8083/connectors/<Connector_Name>`
 
 
 
