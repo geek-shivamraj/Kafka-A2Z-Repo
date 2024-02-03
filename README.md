@@ -131,7 +131,7 @@ plugin.path=/absolute_path or relative/kafka-connect-http/target
 ```
 org.apache.kafka.connect.cli.ConnectDistributed
 ```
-![image](https://github.com/srvcode/Kafka-A2Z-Repo/assets/74100226/921737d0-4f91-4fc7-ab27-b871eafeaef1)
+![image](https://github.com/srvcode/Kafka-A2Z-Repo/assets/74100226/f09a026e-bd94-47dd-af45-0b6e7a93eda5)
 
 7. [Refer Source Configuration to create the connector](https://github.com/srvcode/Kafka-A2Z-Repo/tree/master/kafka-connect-http/example)
 * POST `localhost:8083/connectors`
