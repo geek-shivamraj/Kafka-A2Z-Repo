@@ -1,0 +1,19 @@
+{
+    "name": "sample-search-issues.jira.http.source",
+    "config": {
+        "connector.class": "com.github.castorm.kafka.connect.http.HttpSourceConnector",
+        "tasks.max": "1",
+        "http.offset.initial": "timestamp=2020-05-08T07:55:44Z",
+        "http.request.url": "https://your-host-here/rest/api/2/search",
+        "http.request.headers": "Accept: application/json",
+        "http.request.params": "jql=updated>=\"${offset.timestamp?datetime.iso?string['yyyy/MM/dd HH:mm']}\" ORDER BY updated ASC&maxResults=100",
+        "http.auth.type": "Basic",
+        "http.auth.user": "username",
+        "http.auth.password": "password",
+        "http.response.list.pointer": "/issues",
+        "http.response.record.offset.pointer": "key=/id, timestamp=/fields/updated",
+        "http.timer.interval.millis": "30000",
+        "http.timer.catchup.interval.millis": "1000",
+        "kafka.topic": "topic"
+    }
+}
