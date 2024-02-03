@@ -1,5 +1,10 @@
 # Apache-Kafka
 
+## Table of Content
+
+* [Kafdrop Documentation](#kafdrop)
+
+
 ## _Kafdrop_
 - **Kafdrop** is a web UI for viewing Kafka topics and browsing consumer groups. The tool displays information such as brokers, topics, partitions, consumers, and lets you view messages.
 - You can run the Kafdrop JAR directly, via Docker, or in Kubernetes.
