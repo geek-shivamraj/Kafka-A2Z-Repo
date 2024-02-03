@@ -4,6 +4,22 @@
 
 * [Kafdrop Documentation](#kafdrop)
 
+## _Confluent Cloud for Kafka_
+
+Steps to configure Confluent Kafka using Confluent CLI
+
+1. Signup/Login to https://confluent.cloud/login
+2. You can navigate & use all Kafka functionality either using the Web UI or using Confluent CLI
+3. [Download official Confluent Kafka & follow the steps](https://docs.confluent.io/platform/current/installation/installing_cp/zip-tar.html)
+4. If Confluent CLI is not present in Confluent kafka, [Then Download Confluent CLI Here & follow the steps.](https://docs.confluent.io/platform/current/installation/installing_cp/zip-tar.html)
+5. [You can configure User Account Here](https://docs.confluent.io/cloud/current/access-management/identity/user-accounts.html)
+6. If Required, [You can configure Service Account & ACLs Here](https://docs.confluent.io/cloud/current/access-management/identity/service-accounts.html)
+7. 
+
+
+
+
+
 
 ## _Kafdrop_
 - **Kafdrop** is a web UI for viewing Kafka topics and browsing consumer groups. The tool displays information such as brokers, topics, partitions, consumers, and lets you view messages.
